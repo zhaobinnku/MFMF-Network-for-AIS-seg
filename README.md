@@ -1,1 +1,1 @@
-# weakly-supervised-learning-few-shot-AIS-seg
+Weakly-supervised Learning Assisted Few-shot Segmentation of Acute Ischemic Stroke Lesion
