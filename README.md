@@ -1,1 +1,1 @@
-Weakly-supervised Learning Assisted Few-shot Segmentation of Acute Ischemic Stroke Lesion
+Deep-Learning Based Acute Ischemic Stroke Lesion Segmentation Method on Multi-Modal MR Images using A Few Fully-Labeled Subjects
