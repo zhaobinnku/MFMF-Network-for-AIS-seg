@@ -92,6 +92,16 @@ validation_correct = []
 validation_add_loss = []
 one_epoch_iteration = len(train_dataloader)
 early_stoping = EarlyStopping(patience=30,learning_rate=opts.learning_rate,  verbose=True)
+def adjust_learning_rate(optimizer, lr):
+#     lr *= (0.1 ** (epoch // 30))
+
+    # print('new_lr', lr)
+    for param_group in optimizer.param_groups:
+            # lr=param_group['lr']
+        param_group['lr'] = lr
+#         print ("decay",param_group['lr'])
+
+
 for epoch in tqdm(range(opts.epochs)):
     train_epoch.append(epoch)
     np.savetxt('data_experiment/train_epoch', train_epoch)
@@ -155,7 +165,7 @@ for epoch in tqdm(range(opts.epochs)):
     validation_add_loss.append(eval_loss / len(validation_dataloader))
     np.savetxt('data_experiment/validation_add_loss', validation_add_loss)
     new_learning_rate = early_stoping(eval_loss / (len(validation_dataloader)), model)
-    optimizer = RAdam(list(model.parameters()), lr=new_learning_rate)
+    adjust_learning_rate(optimizer, new_learning_rate)
     print('new_lr', new_learning_rate)
     if early_stoping.early_stop:
         print("Early stoping")
