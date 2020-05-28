@@ -58,6 +58,11 @@ train_add_loss = []
 train_epoch = []
 one_epoch_iteration = len(train_dataloader)
 early_stoping = EarlyStopping(patience=30, learning_rate=opts.learning_rate, verbose=True)
+def adjust_learning_rate(optimizer, lr):
+    for param_group in optimizer.param_groups:
+
+        param_group['lr'] = lr
+
 
 for epoch in tqdm(range(opts.epochs)):
     train_epoch.append(epoch)
@@ -87,7 +92,7 @@ for epoch in tqdm(range(opts.epochs)):
     np.savetxt('data_experiment/train_add_loss', train_add_loss)
 
     new_learning_rate = early_stoping((train_loss / one_epoch_iteration), model)
-    optimizer = RAdam(filter(lambda p: p.requires_grad, model.parameters()), lr=opts.learning_rate)
+    adjust_learning_rate(optimizer, new_learning_rate)
     print('new_lr', new_learning_rate)
     if early_stoping.early_stop:
         print("Early stoping")
